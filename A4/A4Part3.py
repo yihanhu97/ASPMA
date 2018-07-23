@@ -94,7 +94,7 @@ def computeEngEnv(inputFile, window, M, N, H):
     lowerBand = np.transpose(np.transpose(mX)[1:lowerBin])
     upperBand = np.transpose(np.transpose(mX)[lowerBin:upperBin])
 
-    eDB_low = energy(lowerBand)
+    eDB_low = calculateEnergy(lowerBand)
     eDB_high = calculateEnergy(upperBand)
 
     engEnv = np.append([eDB_low], [eDB_high], axis = 0)

@@ -63,10 +63,10 @@ def extractMainLobe(window, M):
     hM2 = int(math.floor(M/2))
 
     N = 8*M
-    hN = N/2+1
+    hN = N/2
     fftbuffer = np.zeros(N)
     fftbuffer[:hM1] = w[hM2:]
-    fftbuffter[N-hM2:] = w[:hM2]
+    fftbuffer[N-hM2:] = w[:hM2]
 
     X = fft(fftbuffer)
     absX = abs(X)
