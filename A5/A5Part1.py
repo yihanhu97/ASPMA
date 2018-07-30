@@ -61,3 +61,20 @@ def minFreqEstErr(inputFile, f):
     t = -40
     
     ### Your code here
+    (fs,x) = UF.wavread(inputFile)
+    ferror = 1
+    M = int(np.floor(fs/f)) # What does this do?
+    k = int(np.floor(M/100)) # Why choose 100
+    while(ferror >= 0.05):
+        M = 100*k+1
+        N = int(2 ** (np.ceil(np.log2(M))))
+        w = get_window(window, M)
+        x1 = x[int(.5*fs)-M/2:int(.5*fs)+(M+1)/2] # Get the fragment
+        mX, pX = DFT.dftAnal(x1, w, N)
+        ploc = UF.peakDetection(mX, t)
+        iploc, ipmag, ipphase = UF.peakInterp(mX, pX, ploc)
+        fEst = fs*iploc/float(N)
+        ferror = abs(fEst - f)
+        k+=1
+
+    return float(fEst), M, N
